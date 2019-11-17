@@ -429,21 +429,13 @@ def extract_presets(zip_file, input_filename, catalogue)
 end
 
 if ARGV.length < 2
-  STDERR.puts "miniloguesll output_basename input_file(s)"
+  STDERR.puts "miniloguesll display_name output_file input_file(s)"
   STDERR.puts
-  STDERR.puts "Example: miniloguesll \"My Patch Collection\" strings.mnlglib saw1.mnlgprog"
+  STDERR.puts "Example: miniloguesll \"My strings collection\" strings.mnlglib saw1.mnlgprog"
   exit 1
 end
 
-output_name, *input_filenames = ARGV
-
-zip_filename =
-  case output_name
-  when /\.mnlgpreset$/
-    output_name
-  else
-    output_name + '.mnlgpreset'
-  end
+display_name, zip_filename, *input_filenames = ARGV
 
 File.unlink(zip_filename) if File.exist?(zip_filename)
 
@@ -467,7 +459,7 @@ Zip::File.open(zip_filename, Zip::File::CREATE) do |f|
     end
   end
 
-  write_preset_information(f, output_name, output_name, catalogue.length)
+  write_preset_information(f, display_name, display_name, catalogue.length)
   write_file_information(f, catalogue.length)
 end
 
