@@ -344,8 +344,8 @@ def write_file_information(zip_file, n)
     f.puts '    </PresetInformation>'
     (0...n).each do |i|
       f.puts '    <ProgramData>'
-      f.puts "      <Information>Prog_%03d.prog_info</Information>" % i
-      f.puts "      <ProgramBinary>Prog_%03d.prog_bin</ProgramBinary>" % i
+      f.puts '      <Information>Prog_%03d.prog_info</Information>' % i
+      f.puts '      <ProgramBinary>Prog_%03d.prog_bin</ProgramBinary>' % i
       f.puts '    </ProgramData>'
     end
     f.puts '  </Contents>'
@@ -369,12 +369,12 @@ class Catalogue
   def add!(hash)
     @hashes[hash] = true
 
-    ["Prog_%03d.prog_bin" % @i, "Prog_%03d.prog_info" % @i].tap do
+    [format('Prog_%03d.prog_bin', @i), format('Prog_%03d.prog_info', @i)].tap do
       @i += 1
     end
   end
 
-  def ignore!(type, hash)
+  def ignore!(type, _hash)
     @ignored[type] += 1
   end
 
