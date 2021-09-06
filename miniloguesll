@@ -447,10 +447,10 @@ Zip::File.open(zip_filename, Zip::File::CREATE) do |f|
   input_filenames.each_with_index do |input_filename, i|
     case input_filename
     when /\.prog_bin$/
-      hash = Digest::SHA256.hexdigest()
+      hash = Digest::SHA256.hexdigest(File.open(input_filename).read)
       bin_name, info_name = catalogue.add!(hash)
 
-      f.add(bin_name, input_filenames)
+      f.add(bin_name, input_filename)
       write_empty_prog_info(f, info_name)
     when /\.mnlgprog$/, /\.mnlglib$/
       extract_presets(f, input_filename, catalogue)
